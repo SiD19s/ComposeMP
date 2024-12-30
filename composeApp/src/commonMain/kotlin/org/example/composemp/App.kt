@@ -12,12 +12,17 @@ import androidx.compose.material.Text
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.text.font.Font
+import androidx.compose.ui.text.font.FontFamily
 import org.jetbrains.compose.resources.painterResource
 import org.jetbrains.compose.ui.tooling.preview.Preview
 
 import composemp.composeapp.generated.resources.Res
 import composemp.composeapp.generated.resources.addiction
+import composemp.composeapp.generated.resources.app_name
 import composemp.composeapp.generated.resources.compose_multiplatform
+import composemp.composeapp.generated.resources.quicksand_bold
+import org.jetbrains.compose.resources.stringResource
 
 @Composable
 @Preview
@@ -28,7 +33,10 @@ fun App() {
             contentAlignment = Alignment.Center
         ){
             Image(painter = painterResource(Res.drawable.addiction),"")
-            Text("Hello World, I am Lumi")
+            Text(
+                text = stringResource(Res.string.app_name),
+            )
         }
     }
 }
+
