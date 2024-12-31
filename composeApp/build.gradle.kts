@@ -36,6 +36,13 @@ kotlin {
         androidMain.dependencies {
             implementation(compose.preview)
             implementation(libs.androidx.activity.compose)
+
+            implementation(libs.koin.android)
+            implementation(libs.koin.androidx.compose)
+            implementation(libs.billing.ktx)
+            implementation(libs.billingclient.billing.ktx)
+            implementation(libs.jwtdecode)
+            implementation(libs.gson)
         }
         commonMain.dependencies {
             implementation(compose.runtime)
@@ -46,6 +53,15 @@ kotlin {
             implementation(compose.components.uiToolingPreview)
             implementation(libs.androidx.lifecycle.viewmodel)
             implementation(libs.androidx.lifecycle.runtime.compose)
+
+            api(libs.koin.core)
+            implementation(libs.koin.compose)
+            implementation(libs.koin.compose.viewmodel)
+            implementation(libs.lifecycle.viewmodel)
+            implementation(libs.navigation.compose)
+
+            implementation(libs.kotlinx.datetime)
+            implementation(libs.kotlinx.serialization.json)
         }
         desktopMain.dependencies {
             implementation(compose.desktop.currentOs)
@@ -82,6 +98,8 @@ android {
 }
 
 dependencies {
+    implementation(libs.billingclient.billing.ktx)
+    implementation(libs.firebase.auth.ktx)
     debugImplementation(compose.uiTooling)
 }
 
