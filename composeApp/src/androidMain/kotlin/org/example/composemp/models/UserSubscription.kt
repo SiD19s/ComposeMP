@@ -4,9 +4,10 @@ package org.example.composemp.models
 
 
 import com.android.billingclient.api.ProductDetails
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import kotlinx.datetime.Instant
+import kotlinx.datetime.TimeZone
+import kotlinx.datetime.toLocalDateTime
+import kotlinx.datetime.LocalDateTime
 
 data class UserSubscription(
     val userId: String = "",
@@ -27,36 +28,18 @@ data class UserSubscription(
         autoRenew = false
     )
 
-    // Format dates in DD MMM YYYY format
-    fun getFormattedStartDate(): String {
-        return formatDate(startDate)
-    }
-
-    fun getFormattedEndDate(): String {
-        return formatDate(endDate)
-    }
-
-    fun getFormattedLastUpdated(): String {
-        return formatDate(lastUpdated)
-    }
+    // Format dates in "dd MMM yyyy" format using kotlinx-datetime
+    fun getFormattedStartDate(): String = formatDate(startDate)
+    fun getFormattedEndDate(): String = formatDate(endDate)
+    fun getFormattedLastUpdated(): String = formatDate(lastUpdated)
 
     private fun formatDate(timestamp: Long): String {
         return if (timestamp > 0) {
-            val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-            dateFormat.format(Date(timestamp))
+            val instant = Instant.fromEpochMilliseconds(timestamp)
+            val localDateTime: LocalDateTime = instant.toLocalDateTime(TimeZone.currentSystemDefault())
+            "${localDateTime.dayOfMonth} ${localDateTime.month.name.lowercase().replaceFirstChar { it.uppercase() }} ${localDateTime.year}"
         } else {
             "N/A"
-        }
-    }
-
-    companion object {
-        fun formatTimestamp(timestamp: Long): String {
-            return if (timestamp > 0) {
-                val dateFormat = SimpleDateFormat("dd MMM yyyy", Locale.getDefault())
-                dateFormat.format(Date(timestamp))
-            } else {
-                "N/A"
-            }
         }
     }
 }
@@ -67,7 +50,6 @@ enum class SubscriptionStatus {
     CANCELLED,
     TRIAL;
 
-    // Optional: Add companion object if you need to handle custom deserialization
     companion object {
         fun fromString(value: String): SubscriptionStatus {
             return try {
